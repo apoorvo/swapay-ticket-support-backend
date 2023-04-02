@@ -7,6 +7,7 @@ import cors from "cors";
 dotenv.config();
 
 const app: Express = express();
+const port = process.env.PORT;
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -14,7 +15,6 @@ app.use(cors())
 
 
 app.get('/', async(req: Request, res: Response) => {
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     try {
         await sequelize.authenticate();
         console.log('Connection has been established successfully.');
@@ -25,13 +25,11 @@ app.get('/', async(req: Request, res: Response) => {
 });
 
 app.get("/api/v1/tickets/",async (req:Request, res: Response) => {
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const tickets  = await Ticket.findAll({order:[['updatedAt','DESC']]});
     res.send({tickets})
 })
 
 app.post('/api/v1/tickets/',async (req:Request,res:Response)=>{
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const ticket = await Ticket.create({
         details: req.body.details,
         state: req.body.state
@@ -42,7 +40,6 @@ app.post('/api/v1/tickets/',async (req:Request,res:Response)=>{
 
 
 app.get('/api/v1/tickets/:ticketid/',async (req:Request, res: Response) => {
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     console.log(req.params)
     const ticket = await Ticket.findByPk(req.params.ticketid)
     res.send({ticket})
@@ -50,7 +47,6 @@ app.get('/api/v1/tickets/:ticketid/',async (req:Request, res: Response) => {
 })
 
 app.put('/api/v1/tickets/:ticketid/',async (req:Request,res:Response)=>{
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
     const ticket = await Ticket.findByPk(req.params.ticketid)
     ticket?.set({
         details: req.body.details,
@@ -61,12 +57,13 @@ app.put('/api/v1/tickets/:ticketid/',async (req:Request,res:Response)=>{
 })
 
 app.delete('/api/v1/tickets/:ticketid/',async (req:Request, res: Response) => {
-    res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-
+    console.log(req.params)
     const ticket = await Ticket.findByPk(req.params.ticketid)
     ticket?.destroy()
     res.send({message:"Ticket deleted succesfully"})
 })
 
 
-module.exports = app;
+app.listen(port, () => {
+  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+});

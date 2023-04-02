@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node api/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q api/index.js\""
+    "start": "node dir/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dir/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,6 @@
     "express": "^4.18.2",
     "sequelize": "^6.30.0",
     "sequelize-cli": "^6.6.0",
-    "serverless-http": "^3.2.0",
     "sqlite3": "^5.1.6"
   },
   "devDependencies": {
