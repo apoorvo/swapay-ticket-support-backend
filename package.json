@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.ts",
-    "build": "yarn install && rimraf dir && tsc",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dir",
-    "test": "echo \"Error: no test specified\" && exit 1"
-    },
+    "build": "npx tsc",
+    "start": "node dir/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dir/index.js\""
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -30,10 +28,5 @@
     "pre-commit": "^1.2.2",
     "rimraf": "^4.4.1",
     "typescript": "^5.0.3"
-  },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-]
+  }
 }
