@@ -1,9 +1,10 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
-import Ticket from './models/Ticket';
-import {sequelize} from "./models/Ticket"
+import serverless from "serverless-http"
 import cors from "cors";
 
+import Ticket from './models/Ticket';
+import {sequelize} from "./models/Ticket"
 dotenv.config();
 
 const app: Express = express();
@@ -63,7 +64,5 @@ app.delete('/api/v1/tickets/:ticketid/',async (req:Request, res: Response) => {
     res.send({message:"Ticket deleted succesfully"})
 })
 
-
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+module.exports = app;
+module.exports.handler = serverless(app);
