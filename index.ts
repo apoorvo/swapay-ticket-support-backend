@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import Ticket from './models/Ticket';
 import {sequelize} from "./models/Ticket"
 import cors from "cors";
+import serverless from "serverless-http"
 
 dotenv.config();
 
@@ -65,3 +66,4 @@ app.delete('/api/v1/tickets/:ticketid/',async (req:Request, res: Response) => {
 
 
 module.exports = app;
+module.exports.handler = serverless(app)
