@@ -1,0 +1,15 @@
+{
+    "version":2,
+    "builds":[
+        {
+            "src":"./dir/index.js",
+            "user":"@vercel/node"
+        }
+    ],
+    "routes":[
+        {
+            "src":"dir/(.*)",
+            "dest":"dir/"
+        }
+    ]
+}
